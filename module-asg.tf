@@ -14,7 +14,7 @@ module "autoscaling" {
 
   vpc_zone_identifier = [module.vpc.public_subnets[0], module.vpc.public_subnets[1]]
 
-  availability_zones = ["us-east-1"]
+  availability_zones = [module.vpc.public_subnets[0], module.vpc.public_subnets[1]]
 
   termination_policies = ["OldestInstance"]
 
