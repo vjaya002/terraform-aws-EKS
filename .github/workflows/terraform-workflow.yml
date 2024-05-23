@@ -16,7 +16,7 @@ jobs:
 
     env:
       TF_VERSION: 1.8.3 # specify the Terraform version you want to use
-      TF_WORKING_DIR: ./terraform # specify your Terraform configuration directory
+      TF_WORKING_DIR: ./terraform-aws-springboot # specify your Terraform configuration directory
 
     steps:
     - name: Checkout code
