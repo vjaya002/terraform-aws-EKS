@@ -1,0 +1,46 @@
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+
+# Exclude all .tfvars files, which typically contain sensitive data, such as 
+# password, private keys, and other secrets. These should not be shared with the repository.
+*.tfvars
+*.tfvars.json
+
+# Exclude override files as they are usually used to override resources locally 
+# and should not be committed to the repository
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Exclude .terraform directory
+.terraform/
+.terraform.lock.hcl
+
+# Sensitive files
+*.pem
+*.key
+*.crt
+
+# TFLint config file
+.tflint.hcl
+
+# tfplan files
+*.tfplan
+
+# Local directories
+.idea/
+.vscode/
+
+# MacOS files
+.DS_Store
+
+# Log files
+*.log
+
+# Node.js dependencies
+node_modules/
