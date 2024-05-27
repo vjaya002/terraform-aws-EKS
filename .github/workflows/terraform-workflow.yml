@@ -34,6 +34,9 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1 # specify the AWS region
 
+    - name: Read Variables
+      run: echo "MY Terraform backend values ${{vars.AWS_REGION}}"
+
     - name: Terraform Init
       run: terraform init
       working-directory: ${{ env.TF_WORKING_DIR }}
