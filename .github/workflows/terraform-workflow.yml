@@ -34,36 +34,36 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1 # specify the AWS region
 
-    - name: Read Variables
-      run: echo "MY Terraform backend values ${{vars.AWS_REGION}}"
+    - name: Terraform environment_variables
+      run: echo "reading bucket details {{secrets.AWS_REGION}}"
 
-    - name: Terraform Init
-      run: terraform init
-      working-directory: ${{ env.TF_WORKING_DIR }}
+    # - name: Terraform Init
+    #   run: terraform init
+    #   working-directory: ${{ env.TF_WORKING_DIR }}
 
-    - name: Terraform Format
-      run: terraform fmt -check
-      working-directory: ${{ env.TF_WORKING_DIR }}
+    # - name: Terraform Format
+    #   run: terraform fmt -check
+    #   working-directory: ${{ env.TF_WORKING_DIR }}
 
-    - name: Terraform Validate
-      run: terraform validate
-      working-directory: ${{ env.TF_WORKING_DIR }}
+    # - name: Terraform Validate
+    #   run: terraform validate
+    #   working-directory: ${{ env.TF_WORKING_DIR }}
 
-    - name: Terraform Plan
-      id: plan
-      run: terraform plan -out=plan.tfplan
-      working-directory: ${{ env.TF_WORKING_DIR }}
+    # - name: Terraform Plan
+    #   id: plan
+    #   run: terraform plan -out=plan.tfplan
+    #   working-directory: ${{ env.TF_WORKING_DIR }}
 
-    - name: Terraform Plan JSON
-      if: always()
-      run: terraform show -json plan.tfplan | tee plan.json
-      working-directory: ${{ env.TF_WORKING_DIR }}
+    # - name: Terraform Plan JSON
+    #   if: always()
+    #   run: terraform show -json plan.tfplan | tee plan.json
+    #   working-directory: ${{ env.TF_WORKING_DIR }}
 
-    - name: Upload Plan to GitHub Artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: terraform-plan
-        path: ${{ env.TF_WORKING_DIR }}/plan.json
+    # - name: Upload Plan to GitHub Artifacts
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: terraform-plan
+    #     path: ${{ env.TF_WORKING_DIR }}/plan.json
 
     # - name: Terraform destroy
     #   if: github.event_name == 'push'
