@@ -62,10 +62,10 @@ jobs:
         name: terraform-plan
         path: ${{ env.TF_WORKING_DIR }}/plan.json
 
-    - name: Terraform destroy
-      if: github.event_name == 'push'
-      run: terraform destroy -auto-approve plan.tfplan
-      working-directory: ${{ env.TF_WORKING_DIR }}
+    # - name: Terraform destroy
+    #   if: github.event_name == 'push'
+    #   run: terraform destroy -auto-approve plan.tfplan
+    #   working-directory: ${{ env.TF_WORKING_DIR }}
 
     # - name: Terraform Apply
     #   if: github.event_name == 'push'

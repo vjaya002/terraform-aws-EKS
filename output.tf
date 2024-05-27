@@ -17,31 +17,6 @@ output "s3_bucket_region" {
   value = module.s3_bucket.s3_bucket_region
 }
 
-#####Ec2   
-output "ami" {
-  value = module.ec2_instance.ami
-}
-
-output "arn" {
-  value = module.ec2_instance.arn
-}
-
-output "availability_zone" {
-  value = module.ec2_instance.availability_zone
-}
-
-output "id" {
-  value = module.ec2_instance.id
-}
-
-output "instance_state" {
-  value = module.ec2_instance.instance_state
-}
-
-output "public_ip" {
-  value = module.ec2_instance.public_ip
-}
-
 # =========vpc
 
 output "azs" {
@@ -452,75 +427,23 @@ output "public_subnets_cidr_blocks" {
 # output "public_subnets_ipv6_cidr_blocks" {
 #   description =
 
-#######  key_pair  #####
-output "key_pair_arn" {
-  description = "generates key_pair arn"
-  value       = module.key-pair.key_pair_arn
-  sensitive   = true
-}
-output "key_pair_name" {
-  description = "generates_key_pair_name"
-  value       = module.key-pair.key_pair_name
-}
-
-output "key_pair_id" {
-  description = "generates key pair id"
-  value       = module.key-pair.key_pair_id
-}
-
-output "private_key_id" {
-  description = "private key id"
-  value       = module.key-pair.private_key_id
-}
-
-output "security_group_id" {
-
-  description = "Security group id"
-  value       = module.security_service_sg.security_group_id
-
-}
-### Iam policy sync up
-
-# output "ec2_iam_arn" {
-#   description = "Iam policy sync up with ec2 instance"
-#   value       = module.iam_ec2_policy.arn
-
-# }
-# output "description" {
-#   description = "Iam policy description"
-#   value       = module.iam_ec2_policy.description
-# }
-# output "name_iam" {
-#   description = "Iam name of  policy name"
-#   value       = module.iam_ec2_policy.name
-# }
-
-# output "path" {
-#   description = "Iam name of  policy path"
-#   value       = module.iam_ec2_policy.path
-# }
-# output "ec2_instance_iam_policy" {
-#   description = "Iam ec2 instance policy json"
-#   value       = module.iam_ec2_policy.policy
-# }
-
 #CODEDEPLOY-OUTPUTS
-output "deployment_config_id" {
-  value = module.code-deploy.deployment_config_id
-}
+# output "deployment_config_id" {
+#   value = module.code-deploy.deployment_config_id
+# }
 
-output "deployment_config_name" {
-  value = module.code-deploy.deployment_config_name
-}
+# output "deployment_config_name" {
+#   value = module.code-deploy.deployment_config_name
+# }
 
-output "group_id" {
-  value = module.code-deploy.group_id
-}
+# output "group_id" {
+#   value = module.code-deploy.group_id
+# }
 
-output "identifier_id" {
-  value = module.code-deploy.id
-}
+# output "identifier_id" {
+#   value = module.code-deploy.id
+# }
 
-output "indentifier_name" {
-  value = module.code-deploy.name
-}
+# output "indentifier_name" {
+#   value = module.code-deploy.name
+# }
