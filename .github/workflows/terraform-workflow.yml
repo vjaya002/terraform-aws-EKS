@@ -38,24 +38,18 @@ jobs:
       run: terraform init -backend-config="bucket=${{ secrets.S3_BACKEND }}" -backend-config="key=${{ secrets.S3_KEY }}"
       working-directory: ${{ env.TF_WORKING_DIR }}
 
-    # Uncomment the following steps as needed:
+    - name: Terraform Format
+      run: terraform fmt -check
+      working-directory: ${{ env.TF_WORKING_DIR }}
 
-    # - name: Terraform Init
-    #   run: terraform init
-    #   working-directory: ${{ env.TF_WORKING_DIR }}
+    - name: Terraform Validate
+      run: terraform validate
+      working-directory: ${{ env.TF_WORKING_DIR }}
 
-    # - name: Terraform Format
-    #   run: terraform fmt -check
-    #   working-directory: ${{ env.TF_WORKING_DIR }}
-
-    # - name: Terraform Validate
-    #   run: terraform validate
-    #   working-directory: ${{ env.TF_WORKING_DIR }}
-
-    # - name: Terraform Plan
-    #   id: plan
-    #   run: terraform plan -out=plan.tfplan
-    #   working-directory: ${{ env.TF_WORKING_DIR }}
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan
+      working-directory: ${{ env.TF_WORKING_DIR }}
 
     # - name: Terraform Plan JSON
     #   if: always()
