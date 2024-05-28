@@ -35,7 +35,7 @@ jobs:
         aws-region: us-east-1 # specify the AWS region
 
     - name: Terraform environment_variables
-      run: echo "reading bucket details ${{env.AWS_REGION}} /n ${{env.DBYANMO_DB_TABLE}}"
+      run: echo "reading bucket details ${{env.DBYANMO_DB_TABLE}}"
 
     # - name: Terraform Init
     #   run: terraform init
