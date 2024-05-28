@@ -51,6 +51,15 @@ jobs:
       run: terraform plan -var="s3_backend=${{ secrets.S3_BACKEND }}" -var="s3_key=${{ secrets.S3_KEY }}" -lock=false
       working-directory: ${{ env.TF_WORKING_DIR }}
 
+    - name: Manual Approval
+      if: always()
+      uses: tzkhan/manual-approval@v1
+
+    - name: Terraform Apply
+      if: always()
+      run: terraform apply
+      working-directory: ${{ env.TF_WORKING_DIR }}
+
     # - name: Terraform Plan JSON
     #   if: always()
     #   run: terraform show -json plan.tfplan | tee plan.json
