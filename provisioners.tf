@@ -14,13 +14,13 @@ terraform {
   backend "s3" {
     bucket         = var.s3_backend
     key            = var.s3_key
-    region         = var.aws_region
-    encrypt        = var.s3_encrypt
-    dynamodb_table = var.dynamo_db_table
+    region         = "us-east-1"
+    encrypt        = true
+    dynamodb_table = "tf-backend"
   }
 }
 
 
 provider "aws" {
-  region = var.aws_region
+  region = "us-east-1"
 }
