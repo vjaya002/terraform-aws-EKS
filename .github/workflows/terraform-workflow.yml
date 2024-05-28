@@ -69,5 +69,5 @@ jobs:
 
     - name: Terraform Apply
       if: github.event_name == 'push'
-      run: terraform apply -auto-approve plan.tfplan
+      run: terraform apply -auto-approve
       working-directory: ${{ env.TF_WORKING_DIR }}
