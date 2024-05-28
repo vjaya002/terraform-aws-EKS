@@ -62,12 +62,12 @@ jobs:
     #     name: terraform-plan
     #     path: ${{ env.TF_WORKING_DIR }}/plan.json
 
-    # - name: Terraform destroy
-    #   if: github.event_name == 'push'
-    #   run: terraform destroy -auto-approve plan.tfplan
-    #   working-directory: ${{ env.TF_WORKING_DIR }}
-
-    - name: Terraform Apply
+    - name: Terraform destroy
       if: github.event_name == 'push'
-      run: terraform apply -var="s3_backend=${{ secrets.S3_BACKEND }}" -var="s3_key=${{ secrets.S3_KEY }}" -auto-approve
+      run: terraform destroy -var="s3_backend=${{ secrets.S3_BACKEND }}" -var="s3_key=${{ secrets.S3_KEY }}" -auto-approve
       working-directory: ${{ env.TF_WORKING_DIR }}
+
+    # - name: Terraform Apply
+    #   if: github.event_name == 'push'
+    #   run: terraform apply -var="s3_backend=${{ secrets.S3_BACKEND }}" -var="s3_key=${{ secrets.S3_KEY }}" -auto-approve
+    #   working-directory: ${{ env.TF_WORKING_DIR }}
