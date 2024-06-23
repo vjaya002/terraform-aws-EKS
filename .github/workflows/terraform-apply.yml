@@ -67,7 +67,7 @@ jobs:
     #   run: terraform destroy -var="s3_backend=${{ secrets.S3_BACKEND }}" -var="s3_key=${{ secrets.S3_KEY }}" -auto-approve
     #   working-directory: ${{ env.TF_WORKING_DIR }}
 
-    # - name: Terraform Apply
-    #   if: github.event_name == 'push'
-    #   run: terraform apply -var="s3_backend=${{ secrets.S3_BACKEND }}" -var="s3_key=${{ secrets.S3_KEY }}" -auto-approve
-    #   working-directory: ${{ env.TF_WORKING_DIR }}
+    - name: Terraform Apply
+      if: github.event_name == 'push'
+      run: terraform apply -var="s3_backend=${{ secrets.S3_BACKEND }}" -var="s3_key=${{ secrets.S3_KEY }}" -auto-approve
+      working-directory: ${{ env.TF_WORKING_DIR }}
