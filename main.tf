@@ -22,6 +22,8 @@ module "vpc" {
   enable_vpn_gateway = true
   create_igw         = true
 
+  map_public_ip_on_launch = var.map_public_ip_on_launch
+
   tags = var.tags
 }
 # ================================
@@ -43,6 +45,7 @@ module "autoscaling" {
   iam_instance_profile_name   = var.iam_instance_profile_name
   iam_role_description        = var.iam_role_description
   iam_role_name               = var.iam_role_name
+  security_groups             = [module.custom_security_groups.security_group_id]
   tags                        = var.tags
 
   initial_lifecycle_hooks = [
@@ -59,6 +62,16 @@ module "autoscaling" {
       heartbeat_timeout     = 180
       lifecycle_transition  = "autoscaling:EC2_INSTANCE_TERMINATING"
       notification_metadata = jsonencode({ "goodbye" = "world" })
+    }
+  ]
+
+  network_interfaces = [
+    {
+      delete_on_termination       = true
+      description                 = "eth0"
+      device_index                = 0
+      security_groups             = [module.custom_security_groups.security_group_id]
+      associate_public_ip_address = true
     }
   ]
 }
@@ -80,8 +93,9 @@ module "autoscaling" {
 
 
 module "codedeploy" {
-  source  = "Cloud-42/codedeploy/aws"
-  version = "2.0.0"
+
+  source = "github.com/SrivenkateswaraReddy/terraform-aws-codedeploy"
+  # version = "2.0.0"
   # insert the 3 required variables here
   autoscaling_groups = module.autoscaling.autoscaling_group_name
   # data_bucket_name       = module.s3-bucket.s3_bucket_id
@@ -91,4 +105,39 @@ module "codedeploy" {
   expiration             = var.expiration
   lifecycle_rule_enabled = var.lifecycle_rule_enabled
   tags                   = var.tags
+}
+module "custom_security_groups" {
+  source      = "terraform-aws-modules/security-group/aws"
+  version     = "5.1.2"
+  name        = "custom_security_groups"
+  description = "adding custom security groups for the AWS account"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress_with_cidr_blocks = [
+    {
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      description = "HTTP"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      description = "SSH for EC2 Instance Connect"
+      cidr_blocks = "18.206.107.24/29" # EC2 Instance Connect IP range for us-east-1
+    },
+    # {
+    #   from_port   = 22
+    #   to_port     = 22
+    #   protocol    = "tcp"
+    #   description = "SSH for EC2 Instance Connect"
+    #   cidr_blocks = "0.0.0.0/0" # EC2 Instance Connect IP range for us-east-1
+    # }
+  ]
+
+  egress_rules = ["all-all"] # Allow all outbound traffic
+
+  tags = var.tags
 }

@@ -52,6 +52,13 @@ variable "cidr_details" {
 
 }
 
+variable "map_public_ip_on_launch" {
+
+  description = "value of the public ip on the launch"
+  type        = bool
+  default     = true
+}
+
 
 # ASG Details 
 variable "name" {
@@ -171,3 +178,4 @@ variable "lifecycle_rule_enabled" {
   type        = bool
   default     = true
 }
+
