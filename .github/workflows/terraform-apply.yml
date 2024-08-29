@@ -48,7 +48,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -var="s3_backend=${{ secrets.S3_BACKEND }}" -var="s3_key=${{ secrets.S3_KEY }}"
+      run: terraform plan -var-file="dev.tfvars"
       working-directory: ${{ env.TF_WORKING_DIR }}
 
     # - name: Terraform Plan JSON
