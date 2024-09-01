@@ -9,6 +9,17 @@ on:
     branches:
     - main
     - master
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Action to perform (Apply, Destory or plan)"
+        required: false
+        # default: 'destory'
+        type: choice
+        options:
+        - apply
+        - destroy
+        - plan
 
 jobs:
   terraform:
@@ -61,13 +72,17 @@ jobs:
     #   with:
     #     name: terraform-plan
     #     path: ${{ env.TF_WORKING_DIR }}/plan.json
+    - name: Terraform plan
+      if: github.event.inputs.action == 'plan'
+      run: terraform plan -var-file=dev.tfvars
+      working-directory: ${{ env.TF_WORKING_DIR }}
 
-    # - name: Terraform destroy
-    #   if: github.event_name == 'push'
-    #   run: terraform destroy -var="s3_backend=${{ secrets.S3_BACKEND }}" -var="s3_key=${{ secrets.S3_KEY }}" -auto-approve
-    #   working-directory: ${{ env.TF_WORKING_DIR }}
+    - name: Terraform destroy
+      if: github.event.inputs.action == 'destory'
+      run: terraform destroy -var-file=dev.tfvars --auto-approve
+      working-directory: ${{ env.TF_WORKING_DIR }}
 
-    # - name: Terraform Apply
-    #   if: github.event_name == 'push'
-    #   run: terraform apply -var="s3_backend=${{ secrets.S3_BACKEND }}" -var="s3_key=${{ secrets.S3_KEY }}" -auto-approve
-    #   working-directory: ${{ env.TF_WORKING_DIR }}
+    - name: Terraform Apply
+      if: github.event.inputs.action == 'apply'
+      run: terraform apply -var-file=dev.tfvars --auto-approve
+      working-directory: ${{ env.TF_WORKING_DIR }}
