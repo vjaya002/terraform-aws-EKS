@@ -13,8 +13,8 @@ on:
     inputs:
       action:
         description: "Action to perform (Apply, Destory or plan)"
-        required: false
-        # default: 'destory'
+        required: true
+        default: 'plan'
         type: choice
         options:
         - apply
