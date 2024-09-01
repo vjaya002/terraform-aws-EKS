@@ -47,7 +47,6 @@ module "autoscaling" {
   iam_role_name               = var.iam_role_name
   security_groups             = [module.custom_security_groups.security_group_id]
   tags                        = var.tags
-
   initial_lifecycle_hooks = [
     {
       name                  = "ExampleStartupLifeCycleHook"
@@ -128,13 +127,20 @@ module "custom_security_groups" {
       description = "SSH for EC2 Instance Connect"
       cidr_blocks = "18.206.107.24/29" # EC2 Instance Connect IP range for us-east-1
     },
-    # {
-    #   from_port   = 22
-    #   to_port     = 22
-    #   protocol    = "tcp"
-    #   description = "SSH for EC2 Instance Connect"
-    #   cidr_blocks = "0.0.0.0/0" # EC2 Instance Connect IP range for us-east-1
-    # }
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      description = "SSH for EC2 Instance Connect"
+      cidr_blocks = "0.0.0.0/0" # EC2 Instance Connect IP range for us-east-1
+    },
+    {
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      description = "HTTP for EC2 Instance Connect"
+      cidr_blocks = "0.0.0.0/0" # EC2 Instance Connect IP range for us-east-1
+    }
   ]
 
   egress_rules = ["all-all"] # Allow all outbound traffic
