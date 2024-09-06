@@ -140,6 +140,13 @@ module "custom_security_groups" {
       protocol    = "tcp"
       description = "HTTP for EC2 Instance Connect"
       cidr_blocks = "0.0.0.0/0" # EC2 Instance Connect IP range for us-east-1
+    },
+    {
+      from_port   = 8080
+      to_port     = 8080
+      protocol    = "tcp"
+      description = "HTTP for EC2 Instance Connect to jenkins server"
+      cidr_blocks = "0.0.0.0/0" # EC2 Instance Connect IP range for us-east-1
     }
   ]
 
