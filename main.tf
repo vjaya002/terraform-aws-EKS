@@ -6,6 +6,16 @@ resource "random_string" "random_string_generator" {
 
 }
 
+resource "tls_private_key" "ec2_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "ec2_pair" {
+  key_name   = "aws_key_pair"
+  public_key = tls_private_key.ec2_key.public_key_openssh
+}
+
 # https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
@@ -47,6 +57,7 @@ module "autoscaling" {
   iam_role_name               = var.iam_role_name
   security_groups             = [module.custom_security_groups.security_group_id]
   tags                        = var.tags
+  key_name                    = aws_key_pair.ec2_pair.key_name
   initial_lifecycle_hooks = [
     {
       name                  = "ExampleStartupLifeCycleHook"
