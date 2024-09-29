@@ -48,3 +48,4 @@ node_modules/
 # folder names to ignore
 variables/
 Architecture/
+scripts/

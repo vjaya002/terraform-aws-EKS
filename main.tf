@@ -163,7 +163,14 @@ module "custom_security_groups" {
       from_port   = 9090
       to_port     = 9090
       protocol    = "tcp"
-      description = "HTTP for EC2 Instance Connect to jenkins server"
+      description = "HTTP for EC2 Instance Connect to prometheus server"
+      cidr_blocks = "0.0.0.0/0" # EC2 Instance Connect IP range for us-east-1
+    },
+    {
+      from_port   = 3000
+      to_port     = 3000
+      protocol    = "tcp"
+      description = "HTTP for EC2 Instance Connect to prometheus server"
       cidr_blocks = "0.0.0.0/0" # EC2 Instance Connect IP range for us-east-1
     }
   ]
@@ -173,3 +180,13 @@ module "custom_security_groups" {
   tags = var.tags
 }
 
+# resource "aws_lb" "dev-alb" {
+
+#   name               = "dev-alb-tf"
+#   internal           = false
+#   load_balancer_type = "application"
+#   security_groups    = [module.custom_security_groups.security_group_id]
+#   subnets            = [for subnet in module.vpc.public_subnets : subnet.id]
+#   tags               = var.tags
+
+# }
